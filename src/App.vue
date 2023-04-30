@@ -1,8 +1,9 @@
 <script setup lang="ts">
 </script>
 
-<template>
+<template lang="pug">
+.root
 </template>
 
-<style scoped>
+<style lang="sass" scoped>
 </style>
