@@ -1,0 +1,2 @@
+# FusionizedInnovationGenerator
+ChatGPTを使った、「既存のシステムに別の要素を取り入れた新しいシステム」を提案するWebアプリケーション
