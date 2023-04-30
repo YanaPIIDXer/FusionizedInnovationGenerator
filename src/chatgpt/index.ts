@@ -1,4 +1,4 @@
-import openai from "openai";
+import * as openai from "openai";
 
 /**
  * ChatGPTクラス
