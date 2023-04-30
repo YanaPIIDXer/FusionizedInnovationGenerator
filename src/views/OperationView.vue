@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { routePaths } from "../routes";
 
 const operation = ref("");
+const router = useRouter();
 
 /**
  * 「次へ」押下
  */
 const onNext = () => {
-  alert(operation.value);
+  router.push({
+    path: routePaths.innovation,
+    query: {
+      operation: operation.value,
+    }
+  });
 }
 
 defineExpose({
