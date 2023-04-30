@@ -11,6 +11,7 @@ export const routePaths = {
   home: "/",
   operation: "/operation",
   innovation: "/innovation",
+  generate: "/generate",
 };
 
 const routes: RouteRecordRaw[] = [
@@ -28,6 +29,11 @@ const routes: RouteRecordRaw[] = [
     name: "innovation",
     path: routePaths.innovation,
     component: () => import("../views/InnovationView.vue"),
+  },
+  {
+    name: "generate",
+    path: routePaths.generate,
+    component: () => import("../views/GenerateView.vue"),
   },
 ];
 

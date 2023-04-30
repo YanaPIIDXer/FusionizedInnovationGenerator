@@ -1,13 +1,24 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { routePaths } from "../routes";
 
 const innovation = ref("");
+const route = useRoute();
+const router = useRouter();
 
 /**
  * 「次へ」押下
  */
 const onNext = () => {
-  alert(innovation.value);
+  const operation = route.query.operation;
+  router.push({
+    path: routePaths.generate,
+    query: {
+      operation,
+      innovation: innovation.value,
+    }
+  })
 }
 
 defineExpose({
