@@ -9,6 +9,7 @@ import {
  */
 export const routePaths = {
   home: "/",
+  operation: "/operation",
 };
 
 const routes: RouteRecordRaw[] = [
@@ -16,6 +17,11 @@ const routes: RouteRecordRaw[] = [
     name: "home",
     path: routePaths.home,
     component: () => import("../views/HomeView.vue"),
+  },
+  {
+    name: "operation",
+    path: routePaths.operation,
+    component: () => import("../views/OperationView.vue"),
   },
 ];
 
