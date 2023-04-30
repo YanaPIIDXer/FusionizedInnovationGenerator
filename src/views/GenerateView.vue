@@ -25,7 +25,14 @@ onMounted(async () => {
     const replaceStartWords: string = replaceStartWordsResult.data;
     
     const replaceResponse = await chatGpt.sendMessage(replaceStartWords.replace("$SYSTEM$", operation.value), false);
-    response.value = JSON.parse(replaceResponse).message;
+    const replacedMessage: string = JSON.parse(replaceResponse).message;
+    
+    const directSuggestionsResult = await templateFetch.get("DirectSuggestions.txt");
+    if (directSuggestionsResult.status !== 200) { throw directSuggestionsResult; }
+    const directSuggestions: string = directSuggestionsResult.data;
+    const prompt = directSuggestions.replace("$START_WORDS$", replacedMessage).replace("$SYSTEM$", operation.value).replace("$INNOVATION$", innovation.value);
+
+    response.value = await chatGpt.sendMessage(prompt, true);
   } catch (error: any) {
     alert(error.message ?? "エラー");
     console.error(error);
