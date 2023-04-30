@@ -5,19 +5,30 @@ import { ChatGPT } from "../chatgpt";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import ProgressSpinner from "primevue/progressspinner";
+import axios from "axios";
 
 const route = useRoute();
-const operation = ref(route.query.operation);
-const innovation = ref(route.query.innovation);
+const operation = ref(route.query.operation as string);
+const innovation = ref(route.query.innovation as string);
 const response = ref("");
 const chatGpt = new ChatGPT();
 const isProgress = ref(false);
+const templateFetch = axios.create({
+  baseURL: location.origin + "/templates",
+});
 
 onMounted(async () => {
   isProgress.value = true;
   try {
-    response.value = await chatGpt.sendMessage("TypeScriptでHello Worldを書いてください", false);
-  } catch (error) {
+    const replaceStartWordsResult = await templateFetch.get("ReplaceStartWords.txt");
+    if (replaceStartWordsResult.status !== 200) { throw replaceStartWordsResult; }
+    const replaceStartWords: string = replaceStartWordsResult.data;
+    
+    const replaceResponse = await chatGpt.sendMessage(replaceStartWords.replace("$SYSTEM$", operation.value), false);
+    response.value = JSON.parse(replaceResponse).message;
+  } catch (error: any) {
+    alert(error.message ?? "エラー");
+    console.error(error);
   } finally {
     isProgress.value = false;
   }
